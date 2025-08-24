@@ -1,5 +1,6 @@
 import { Inngest } from "inngest";
 import prisma from "./prisma.js";
+import { upsertStreamUser } from "./stream.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({
@@ -30,6 +31,12 @@ const syncUser = inngest.createFunction(
       create: userData,
     });
 
+    await upsertStreamUser({
+        id: userData.clerkId.toString(),
+        name: userData.name,
+        image: userData.image
+    })
+
     console.log("User synced:", user);
   }
 );
@@ -45,8 +52,8 @@ const deleteUserFromDB = inngest.createFunction(
     const user = await prisma.user.delete({
       where: { clerkId: id },
     });
-    // await deleteStreamUser(id.toString()) // delete user from stream too
-
+    await deleteStreamUser(id.toString()) // delete user from stream too
+    
     console.log("User deleted:", user);
   }
 );
