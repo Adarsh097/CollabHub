@@ -2,7 +2,9 @@ import { Inngest } from "inngest";
 import prisma from "./prisma.js";
 
 // Create a client to send and receive events
-export const inngest = new Inngest({ id: "collab-hub" });
+export const inngest = new Inngest({ id: "collab-hub",
+    signingKey: process.env.INTGEST_SIGNING_KEY
+});
 
 const syncUser = inngest.createFunction(
     {id: "sync-user"},
