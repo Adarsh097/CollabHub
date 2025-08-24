@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(clerkMiddleware()); //! req.auth will be available
 
+
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.get("/", (req, res) => {
