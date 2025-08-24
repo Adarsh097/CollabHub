@@ -10,7 +10,7 @@ app.use(clerkMiddleware()); //! req.auth will be available
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
