@@ -12,14 +12,14 @@ import {
   createRoutesFromChildren,
   matchRoutes,
 } from "react-router";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
+
 import * as Sentry from "@sentry/react";
 
-import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./providers/AuthProvider.jsx";
+
+const queryClient = new QueryClient();
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -29,7 +29,7 @@ if (!PUBLISHABLE_KEY) {
 }
 
 Sentry.init({
-  dsn: "https://ff42cb635c56bc0042245932554ea06c@o4509898414161920.ingest.us.sentry.io/4509931696553984",
+  dsn: import.meta.env.VITE_SENTRY_DSN,
   integrations: [
     Sentry.reactRouterV7BrowserTracingIntegration({
       useEffect: React.useEffect,
@@ -41,7 +41,6 @@ Sentry.init({
   ],
   tracesSampleRate: 1.0,
 });
-const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -49,9 +48,7 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-             
             <App />
-           
           </AuthProvider>
           <Toaster position="top-right" />
         </QueryClientProvider>
