@@ -36,7 +36,7 @@ It features **chat, file sharing, polls, video calls, authentication, and more**
 
 ### Backend (`/backend/.env`)
 ```env
-PORT=5001
+PORT=your_port_no
 
 # Database (PostgreSQL)
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=public"
@@ -59,7 +59,7 @@ INNGEST_EVENT_KEY=your_inngest_event_key_here
 INNGEST_SIGNING_KEY=your_inngest_signing_key_here
 
 # Client URL
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=your_frontend_url
 ```
 
 ### Frontend (/frontend/.env)
@@ -106,4 +106,5 @@ npm run dev
 - .env files are required for both backend and frontend
 - Ensure PostgreSQL is running and DATABASE_URL is correctly configured
 - Prisma generates types automatically after running migrations
+
 - In production, set NODE_ENV=production and update environment variables
