@@ -13,6 +13,7 @@ const STREAM_SECRET_KEY = process.env.STREAM_SECRET_KEY;
 const SENTRY_DSN = process.env.SENTRY_DSN;
 const INGEST_EVENT_KEY = process.env.INGEST_EVENT_KEY;
 const INTGEST_SIGNING_KEY = process.env.INTGEST_SIGNING_KEY;
+const CLIENT_URL = process.env.CLIENT_URL;
 
 export{
     PORT,
@@ -25,5 +26,6 @@ export{
     STREAM_SECRET_KEY,
     SENTRY_DSN,
     INGEST_EVENT_KEY,
-    INTGEST_SIGNING_KEY
+    INTGEST_SIGNING_KEY,
+    CLIENT_URL
 }
