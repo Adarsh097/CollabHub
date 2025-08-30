@@ -1,7 +1,7 @@
 import "../instrument.mjs";
 import express from "express";
 import { serve } from "inngest/express";
-import { NODE_ENV, PORT } from "./config/env.js";
+import { CLIENT_URL, NODE_ENV, PORT } from "./config/env.js";
 import { clerkMiddleware } from "@clerk/express";
 import { functions, inngest } from "./config/inngest.js";
 import routes from "./routes/index.js";
@@ -10,7 +10,7 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: CLIENT_URL,
   credentials: true,
 }));
 app.use(clerkMiddleware()); //! req.auth will be available
