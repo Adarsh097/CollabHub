@@ -60,3 +60,50 @@ INNGEST_SIGNING_KEY=your_inngest_signing_key_here
 
 # Client URL
 CLIENT_URL=http://localhost:5173
+```
+
+### Frontend (/frontend/.env)
+```env
+
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
+VITE_STREAM_API_KEY=your_stream_api_key_here
+VITE_SENTRY_DSN=your_sentry_dsn_here
+VITE_API_BASE_URL=your_backend_url_here
+
+```
+
+## 🚀 Setup & Installation
+
+### 1️⃣ Clone the Repository
+
+```env
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+
+```
+
+### 2️⃣ Backend Setup
+
+```env
+cd backend
+npm install
+npx prisma migrate dev
+npx prisma db seed   # optional
+npm run dev
+
+```
+
+### 3️⃣ Frontend Setup
+```env
+cd frontend
+npm install
+npm run dev
+```
+
+
+## 🧪 Development Notes
+
+- .env files are required for both backend and frontend
+- Ensure PostgreSQL is running and DATABASE_URL is correctly configured
+- Prisma generates types automatically after running migrations
+- In production, set NODE_ENV=production and update environment variables
