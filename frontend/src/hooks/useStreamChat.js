@@ -2,36 +2,36 @@ import { useState, useEffect } from "react";
 import { StreamChat } from "stream-chat";
 import { useUser } from "@clerk/clerk-react";
 import { useQuery } from "@tanstack/react-query";
-import { getSreamToken } from "../lib/api";
+import { getStreamToken } from "../lib/api";
 import * as Sentry from "@sentry/react";
 
+const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
 
-const VITE_STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
+// this hook is used to connect the current user to the Stream Chat API
+// so that users can see each other's messages, send messages to each other, get realtime updates, etc.
+// it also handles  the disconnection when the user leaves the page
 
-//! this hook is used to connect the current user to stream chat API.
-//! so that users can see each other in the chat and can send messages to each other.
-//! it also handles the disconnection of the user from stream chat API when the component unmounts.
-
-export const useStramChat = () => {
+export const useStreamChat = () => {
   const { user } = useUser();
   const [chatClient, setChatClient] = useState(null);
 
-  // fetch the stream token for the current user
+  // fetch stream token using react-query
   const {
     data: tokenData,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["streamToken"],
-    queryFn: getSreamToken,
-    enabled: !!user?.id, //! this will take object id from clerk and pass it to the api to get the stream token
+    queryFn: getStreamToken,
+    enabled: !!user?.id, // this will take the object and convert it to a boolean
   });
 
+  // init stream chat client
+  // init stream chat client
   useEffect(() => {
-    if (!tokenData?.token || !user?.id || !VITE_STREAM_API_KEY) return;
+    if (!tokenData?.token || !user?.id || !STREAM_API_KEY) return;
 
-    const client = StreamChat.getInstance(VITE_STREAM_API_KEY);
-
+    const client = StreamChat.getInstance(STREAM_API_KEY);
     let cancelled = false;
 
     const connect = async () => {
@@ -40,10 +40,7 @@ export const useStramChat = () => {
           {
             id: user.id,
             name:
-              user.fullName ??
-              user.username ??
-              user.primaryEmailAddress?.emailAddress ??
-              user.id,
+              user.fullName ?? user.username ?? user.primaryEmailAddress?.emailAddress ?? user.id,
             image: user.imageUrl ?? undefined,
           },
           tokenData.token
@@ -66,11 +63,12 @@ export const useStramChat = () => {
 
     connect();
 
+    // cleanup
     return () => {
       cancelled = true;
       client.disconnectUser();
     };
   }, [tokenData?.token, user?.id]);
 
-    return { chatClient, isLoading, error };
+  return { chatClient, isLoading, error };
 };
