@@ -5,10 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_OPTIONS='--import ./instrument.mjs' node src/index.js",
-    "dev": "NODE_OPTIONS='--import ./instrument.mjs' nodemon src/index.js",
-    "build": "prisma generate",
-    "postinstall": "prisma generate && prisma migrate deploy"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "node",
